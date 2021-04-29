@@ -1,5 +1,2 @@
 Salut !
-Ceci est un test
-Pour voir si ma fonction fonctionne !
-lol.
-++
+Ceci est un test Pour voir si ma fonction fonctionne ! lol. ++
