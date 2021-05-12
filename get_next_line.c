@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:18:47 by cmariot           #+#    #+#             */
-/*   Updated: 2021/04/30 18:38:21 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/05/12 15:45:52 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,12 @@
 
 int	get_next_line(int fd, char **line)
 {
-	static char	*str;
 	char		buf[BUFFER_SIZE + 1];
 	int		read_return;
 
-	read_return = 1;
-	while (read_return)
-	{
-		read_return = read(fd, buf, BUFFER_SIZE);
-		printf("%d", read_return);
-		buf[read_return] = '\0';
-//		printf("%s", buf);
-		str = ft_strjoin(str, buf);
-	}
-	
-	printf("%s", str);
-
-	*line = str;
+	read_return = read(fd, buf, BUFFER_SIZE);
+	buf[read_return] = '\0';
+	*line = buf;
 	return (read_return);
 	//return = 1 : une ligne a ete lue
 	//return = 0 : La lecture est terminee
