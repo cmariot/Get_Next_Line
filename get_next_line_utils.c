@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:36:20 by cmariot           #+#    #+#             */
-/*   Updated: 2021/06/01 11:18:46 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/06/06 17:49:06 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,10 +138,13 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 void	ft_strdel(char **ptr_str)
 {
 	if (ptr_str != NULL && *ptr_str != NULL)
-		ft_memdel((void**)ptr_str);
+	{
+		free(*ptr_str);
+		*ptr_str = NULL;
+	}
 }
 
-void	ft_memdel(void **ptr_str)
+/*void	ft_memdel(void **ptr_str)
 {
 	if (ptr_str != NULL)
 	{
@@ -189,4 +192,4 @@ int	main(int argc, char **argv)
 		printf("Il n'y a pas le bon nombre d'arguments");
 		return (0);
 	}
-}
+}*/
