@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:43:01 by cmariot           #+#    #+#             */
-/*   Updated: 2021/05/31 18:01:42 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/06/01 11:10:41 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # include <unistd.h>
+# include <stdlib.h>
 
 int     get_next_line(int fd, char **line);
 char	*ft_strdup(const char *s1);
