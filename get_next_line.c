@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:18:47 by cmariot           #+#    #+#             */
-/*   Updated: 2021/06/02 18:25:52 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/06/06 18:30:22 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 int	get_next_line(int fd, char **line)
 {
-	static char *str;
-	char buf[BUFFER_SIZE + 1];
-	int read_return;
-	char *tmp;
-	int len;
+	static char	*str;
+	char		buf[BUFFER_SIZE + 1];
+	int			read_return;
+	char		*tmp;
+	int			len;
 
 	if (fd < 0 || !line || BUFFER_SIZE <= 0)
 		return (-1);
@@ -31,9 +31,7 @@ int	get_next_line(int fd, char **line)
 			return (-1);
 		buf[read_return] = '\0';
 		if (str == NULL)
-		{
 			str = ft_strdup(buf);
-		}
 		else
 		{
 			tmp = ft_strjoin(str, buf);

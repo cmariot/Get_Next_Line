@@ -6,14 +6,13 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:36:20 by cmariot           #+#    #+#             */
-/*   Updated: 2021/06/06 17:49:06 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/06/06 18:32:42 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <fcntl.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 size_t	ft_strlen(const char *s)
 {
@@ -144,17 +143,8 @@ void	ft_strdel(char **ptr_str)
 	}
 }
 
-/*void	ft_memdel(void **ptr_str)
-{
-	if (ptr_str != NULL)
-	{
-		free(*ptr_str);
-		*ptr_str = NULL;
-	}
-}
 
-
-
+/*
 int	main(int argc, char **argv)
 {
 	int	file_descriptor;
