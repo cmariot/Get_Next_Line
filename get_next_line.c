@@ -6,12 +6,39 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:18:47 by cmariot           #+#    #+#             */
-/*   Updated: 2021/06/06 18:30:22 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/06/08 14:43:12 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h" 
 #include <stdio.h>
+
+int	gnl_outpout(int read_return, char **str, char **line)
+{
+	int		len;
+	char	*tmp;
+
+	if (read_return < 0)
+		return (-1);
+	else if (read_return == 0 && *str == NULL)
+		return (0);
+	len = 0;
+	while ((*str)[len] != '\n' && (*str)[len] != '\0')
+		len++;
+	if ((*str)[len] == '\n')
+	{
+		*line = ft_substr(*str, 0, len);
+		tmp = ft_strdup(&(*str)[len + 1]);
+		ft_strdel(str);
+		*str = tmp;
+		if ((*str)[0] == '\0')
+			ft_strdel(str);
+		return (1);
+	}
+	*line = ft_strdup(*str);
+	ft_strdel(str);
+	return (0);
+}
 
 int	get_next_line(int fd, char **line)
 {
@@ -19,7 +46,6 @@ int	get_next_line(int fd, char **line)
 	char		buf[BUFFER_SIZE + 1];
 	int			read_return;
 	char		*tmp;
-	int			len;
 
 	if (fd < 0 || !line || BUFFER_SIZE <= 0)
 		return (-1);
@@ -41,30 +67,5 @@ int	get_next_line(int fd, char **line)
 		if (ft_strchr(str, '\n'))
 			break ;
 	}
-	if (read_return < 0)
-		return (-1);
-	else if (read_return == 0 && str == NULL)
-		return (0);
-	else
-	{
-		len = 0;
-		while (str[len] != '\n' && str[len] != '\0')
-			len++;
-		if (str[len] == '\n')
-		{
-			*line = ft_substr(str, 0, len);
-			tmp = ft_strdup(&str[len + 1]);
-			free(str);
-			str = tmp;
-			if (*str == '\0')
-				ft_strdel(&str);
-			return (1);
-		}
-		else
-		{
-			*line = ft_strdup(str);
-			ft_strdel(&str);
-			return (0);
-		}
-	}
+	return (gnl_outpout(read_return, &str, line));
 }

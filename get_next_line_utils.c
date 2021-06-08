@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:36:20 by cmariot           #+#    #+#             */
-/*   Updated: 2021/06/06 18:32:42 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/06/08 14:31:52 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ void	ft_strdel(char **ptr_str)
 		*ptr_str = NULL;
 	}
 }
-
 
 /*
 int	main(int argc, char **argv)
