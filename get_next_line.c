@@ -6,12 +6,61 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:18:47 by cmariot           #+#    #+#             */
-/*   Updated: 2021/06/08 14:43:12 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/06/08 15:32:51 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h" 
-#include <stdio.h>
+
+char	*ft_strdup(char *s1)
+{
+	int		src_len;
+	char	*src;
+	char	*cpy;
+	int		i;
+
+	src = (char *)s1;
+	src_len = ft_strlen(src);
+	cpy = malloc(sizeof(char) * (src_len + 1));
+	if (!cpy)
+		return (NULL);
+	i = 0;
+	while (i < src_len)
+	{
+		cpy[i] = s1[i];
+		i++;
+	}
+	cpy[i] = '\0';
+	return (cpy);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	int		i;
+	int		j;
+	int		s1_size;
+	int		s2_size;
+	char	*str;
+
+	if (!s1 || !s2)
+		return (NULL);
+	s1_size = ft_strlen(s1);
+	s2_size = ft_strlen(s2);
+	str = malloc(sizeof(char) * (s1_size + s2_size + 1));
+	if (str == NULL)
+		return (NULL);
+	i = 0;
+	while (s1[i] != '\0')
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j] != '\0')
+		str[i++] = s2[j++];
+	str[i] = '\0';
+	return (str);
+}
 
 int	gnl_outpout(int read_return, char **str, char **line)
 {
@@ -40,12 +89,20 @@ int	gnl_outpout(int read_return, char **str, char **line)
 	return (0);
 }
 
+void	new_str(char **str, void *buf)
+{
+	char	*tmp;
+
+	tmp = ft_strjoin(*str, buf);
+	ft_strdel(str);
+	*str = tmp;
+}
+
 int	get_next_line(int fd, char **line)
 {
 	static char	*str;
 	char		buf[BUFFER_SIZE + 1];
 	int			read_return;
-	char		*tmp;
 
 	if (fd < 0 || !line || BUFFER_SIZE <= 0)
 		return (-1);
@@ -59,11 +116,7 @@ int	get_next_line(int fd, char **line)
 		if (str == NULL)
 			str = ft_strdup(buf);
 		else
-		{
-			tmp = ft_strjoin(str, buf);
-			free(str);
-			str = tmp;
-		}
+			new_str(&str, buf);
 		if (ft_strchr(str, '\n'))
 			break ;
 	}
