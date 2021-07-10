@@ -6,32 +6,45 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:18:47 by cmariot           #+#    #+#             */
-/*   Updated: 2021/07/10 16:18:57 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/07/10 16:24:07 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h" 
 
-char	*ft_strdup(char *s1)
+char	*get_next_line(int fd)
 {
-	int		src_len;
-	char	*src;
-	char	*cpy;
-	int		i;
+	static char	*str;
+	char		buf[BUFFER_SIZE + 1];
+	int			read_return;
 
-	src = (char *)s1;
-	src_len = ft_strlen(src);
-	cpy = malloc(sizeof(char) * (src_len + 1));
-	if (!cpy)
-		return (NULL);
-	i = 0;
-	while (i < src_len)
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return ("NULL");
+	read_return = 1;
+	while (read_return)
 	{
-		cpy[i] = s1[i];
-		i++;
+		read_return = read(fd, buf, BUFFER_SIZE);
+		if (read_return == -1)
+			return ("NULL");
+		buf[read_return] = '\0';
+		if (str != NULL)
+			ft_add_buf_to_str(&str, buf);
+		else if (str == NULL)
+			str = ft_strdup(buf);
+		if (ft_strchr(str, '\n'))
+			break ;
 	}
-	cpy[i] = '\0';
-	return (cpy);
+	return (gnl_outpout(read_return, &str));
+}
+
+void	ft_add_buf_to_str(char **str, void *buf)
+{
+	char	*tmp;
+
+	tmp = ft_strjoin(*str, buf);
+	ft_strdel(str);
+	*str = tmp;
+	return ;
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -62,6 +75,28 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
+char	*ft_strdup(char *s1)
+{
+	int		src_len;
+	char	*src;
+	char	*cpy;
+	int		i;
+
+	src = (char *)s1;
+	src_len = ft_strlen(src);
+	cpy = malloc(sizeof(char) * (src_len + 1));
+	if (!cpy)
+		return (NULL);
+	i = 0;
+	while (i < src_len)
+	{
+		cpy[i] = s1[i];
+		i++;
+	}
+	cpy[i] = '\0';
+	return (cpy);
+}
+
 char	*gnl_outpout(int read_return, char **str_input)
 {
 	int		len;
@@ -89,39 +124,4 @@ char	*gnl_outpout(int read_return, char **str_input)
 	str_return = ft_strdup(*str_input);
 	ft_strdel(str_input);
 	return (str_return);
-}
-
-void	ft_add_buf_to_str(char **str, void *buf)
-{
-	char	*tmp;
-
-	tmp = ft_strjoin(*str, buf);
-	ft_strdel(str);
-	*str = tmp;
-	return ;
-}
-
-char	*get_next_line(int fd)
-{
-	static char	*str;
-	char		buf[BUFFER_SIZE + 1];
-	int			read_return;
-
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return ("NULL");
-	read_return = 1;
-	while (read_return)
-	{
-		read_return = read(fd, buf, BUFFER_SIZE);
-		if (read_return == -1)
-			return ("NULL");
-		buf[read_return] = '\0';
-		if (str != NULL)
-			ft_add_buf_to_str(&str, buf);
-		else if (str == NULL)
-			str = ft_strdup(buf);
-		if (ft_strchr(str, '\n'))
-			break ;
-	}
-	return (gnl_outpout(read_return, &str));
 }

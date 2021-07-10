@@ -6,11 +6,20 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:36:20 by cmariot           #+#    #+#             */
-/*   Updated: 2021/06/08 15:23:22 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/07/10 16:24:53 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	ft_strdel(char **adr_str)
+{
+	if (adr_str != NULL && *adr_str != NULL)
+	{
+		free(*adr_str);
+		*adr_str = NULL;
+	}
+}
 
 size_t	ft_strlen(const char *s)
 {
@@ -80,13 +89,4 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	ft_strlcpy(str, (s + start), (len + 1));
 	return (str);
-}
-
-void	ft_strdel(char **adr_str)
-{
-	if (adr_str != NULL && *adr_str != NULL)
-	{
-		free(*adr_str);
-		*adr_str = NULL;
-	}
 }
