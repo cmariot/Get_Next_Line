@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/10 14:42:51 by cmariot           #+#    #+#             */
-/*   Updated: 2021/07/10 16:06:16 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/07/10 16:37:42 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ int	main(int argc, char **argv)
 	int		line_read;
 	char	*str;
 
+	if (argc == 1)
+	{
+		str = get_next_line(1);
+		printf("Ligne : %s", str);
+		free(str);
+		return (0);
+	}
 	if (argc == 2 )
 	{
 		file_descriptor = open(argv[1], O_RDONLY);

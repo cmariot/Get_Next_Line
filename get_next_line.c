@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:18:47 by cmariot           #+#    #+#             */
-/*   Updated: 2021/07/10 16:24:07 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/07/10 16:35:43 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ char	*get_next_line(int fd)
 	char		buf[BUFFER_SIZE + 1];
 	int			read_return;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return ("NULL");
+	if (fd == -1 || BUFFER_SIZE <= 0)
+		return (NULL);
 	read_return = 1;
 	while (read_return)
 	{
 		read_return = read(fd, buf, BUFFER_SIZE);
 		if (read_return == -1)
-			return ("NULL");
+			return (NULL);
 		buf[read_return] = '\0';
 		if (str != NULL)
 			ft_add_buf_to_str(&str, buf);
@@ -106,7 +106,7 @@ char	*gnl_outpout(int read_return, char **str_input)
 	if (read_return == 0 && *str_input == NULL)
 	{
 		ft_strdel(str_input);
-		return ("");
+		return (NULL);
 	}
 	len = 0;
 	while ((*str_input)[len] != '\n' && (*str_input)[len] != '\0')
