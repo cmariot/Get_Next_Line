@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:36:20 by cmariot           #+#    #+#             */
-/*   Updated: 2021/07/10 16:24:53 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/07/10 20:24:47 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	ft_strdel(char **adr_str)
 		free(*adr_str);
 		*adr_str = NULL;
 	}
+	return ;
 }
 
 size_t	ft_strlen(const char *s)

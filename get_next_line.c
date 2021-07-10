@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:18:47 by cmariot           #+#    #+#             */
-/*   Updated: 2021/07/10 16:35:43 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/07/10 20:27:26 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*get_next_line(int fd)
 {
 	static char	*str;
 	char		buf[BUFFER_SIZE + 1];
-	int			read_return;
+	ssize_t		read_return;
 
 	if (fd == -1 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -51,8 +51,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		i;
 	int		j;
-	int		s1_size;
-	int		s2_size;
+	size_t	s1_size;
+	size_t	s2_size;
 	char	*str;
 
 	if (!s1 || !s2)
@@ -77,10 +77,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 char	*ft_strdup(char *s1)
 {
-	int		src_len;
+	size_t	src_len;
 	char	*src;
 	char	*cpy;
-	int		i;
+	size_t	i;
 
 	src = (char *)s1;
 	src_len = ft_strlen(src);
@@ -97,7 +97,7 @@ char	*ft_strdup(char *s1)
 	return (cpy);
 }
 
-char	*gnl_outpout(int read_return, char **str_input)
+char	*gnl_outpout(ssize_t read_return, char **str_input)
 {
 	int		len;
 	char	*tmp;

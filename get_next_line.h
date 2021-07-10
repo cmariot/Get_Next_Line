@@ -26,6 +26,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t	ft_strlcpy(char *dest, const char *src, size_t dst_size);
 void	ft_strdel(char **adr_str);
 void	ft_add_buf_to_str(char **str, void *buf);
-char	*gnl_outpout(int read_return, char **str_input);
+char	*gnl_outpout(ssize_t read_return, char **str_input);
 
 #endif
