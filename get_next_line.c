@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:18:47 by cmariot           #+#    #+#             */
-/*   Updated: 2021/06/08 15:32:51 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/07/10 16:18:57 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,63 +62,66 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-int	gnl_outpout(int read_return, char **str, char **line)
+char	*gnl_outpout(int read_return, char **str_input)
 {
 	int		len;
 	char	*tmp;
+	char	*str_return;
 
-	if (read_return < 0)
-		return (-1);
-	else if (read_return == 0 && *str == NULL)
-		return (0);
-	len = 0;
-	while ((*str)[len] != '\n' && (*str)[len] != '\0')
-		len++;
-	if ((*str)[len] == '\n')
+	if (read_return == 0 && *str_input == NULL)
 	{
-		*line = ft_substr(*str, 0, len);
-		tmp = ft_strdup(&(*str)[len + 1]);
-		ft_strdel(str);
-		*str = tmp;
-		if ((*str)[0] == '\0')
-			ft_strdel(str);
-		return (1);
+		ft_strdel(str_input);
+		return ("");
 	}
-	*line = ft_strdup(*str);
-	ft_strdel(str);
-	return (0);
+	len = 0;
+	while ((*str_input)[len] != '\n' && (*str_input)[len] != '\0')
+		len++;
+	if ((*str_input)[len] == '\n')
+	{
+		str_return = ft_substr(*str_input, 0, len + 1);
+		tmp = ft_strdup(&(*str_input)[len + 1]);
+		ft_strdel(str_input);
+		*str_input = tmp;
+		if ((*str_input)[0] == '\0')
+			ft_strdel(str_input);
+		return (str_return);
+	}
+	str_return = ft_strdup(*str_input);
+	ft_strdel(str_input);
+	return (str_return);
 }
 
-void	new_str(char **str, void *buf)
+void	ft_add_buf_to_str(char **str, void *buf)
 {
 	char	*tmp;
 
 	tmp = ft_strjoin(*str, buf);
 	ft_strdel(str);
 	*str = tmp;
+	return ;
 }
 
-int	get_next_line(int fd, char **line)
+char	*get_next_line(int fd)
 {
 	static char	*str;
 	char		buf[BUFFER_SIZE + 1];
 	int			read_return;
 
-	if (fd < 0 || !line || BUFFER_SIZE <= 0)
-		return (-1);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return ("NULL");
 	read_return = 1;
 	while (read_return)
 	{
 		read_return = read(fd, buf, BUFFER_SIZE);
 		if (read_return == -1)
-			return (-1);
+			return ("NULL");
 		buf[read_return] = '\0';
-		if (str == NULL)
+		if (str != NULL)
+			ft_add_buf_to_str(&str, buf);
+		else if (str == NULL)
 			str = ft_strdup(buf);
-		else
-			new_str(&str, buf);
 		if (ft_strchr(str, '\n'))
 			break ;
 	}
-	return (gnl_outpout(read_return, &str, line));
+	return (gnl_outpout(read_return, &str));
 }
