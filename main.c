@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/10 14:42:51 by cmariot           #+#    #+#             */
-/*   Updated: 2021/07/12 00:05:19 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/07/18 02:58:06 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	main(int argc, char **argv)
 			printf("%s", str);
 			free(str);
 		}
+		close(file_descriptor);
 		return (0);
 	}
 	printf("Il n'y a pas le bon nombre d'arguments");
