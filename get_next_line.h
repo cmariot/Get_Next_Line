@@ -6,12 +6,14 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:43:01 by cmariot           #+#    #+#             */
-/*   Updated: 2021/07/15 16:34:29 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/08/26 00:49:38 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
+# define BUFFER_SIZE 10
 
 # include <unistd.h>
 # include <stdlib.h>

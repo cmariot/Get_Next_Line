@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/10 14:42:51 by cmariot           #+#    #+#             */
-/*   Updated: 2021/07/18 02:58:06 by cmariot          ###   ########.fr       */
+/*   Updated: 2021/08/26 00:48:02 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,34 @@ int	main(int argc, char **argv)
 {
 	int		file_descriptor;
 	char	*str;
-
-	if (argc == 2)
+	
+	if (argc == 1)
+	{
+		while (1)
+		{
+			str = get_next_line(1);
+			if (str == NULL)
+				break ;
+			printf("%s", str);
+			free(str);
+		}
+	}
+	else if (argc == 2)
 	{
 		file_descriptor = open(argv[1], O_RDONLY);
 		if (file_descriptor == -1)
-		{
-			printf("Erreur d'ouverture du fichier");
 			return (-1);
-		}
-		str = get_next_line(file_descriptor);
-		printf("%s", str);
-		while (str)
+		while (1)
 		{
 			str = get_next_line(file_descriptor);
+			if (str == NULL)
+				break ;
 			printf("%s", str);
 			free(str);
 		}
 		close(file_descriptor);
-		return (0);
 	}
-	printf("Il n'y a pas le bon nombre d'arguments");
-	return (-1);
+	else
+		printf("Il n'y a pas le bon nombre d'arguments");
+	return (0);
 }
