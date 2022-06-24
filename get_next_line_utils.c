@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:36:20 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/24 16:05:49 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/24 16:28:57 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	len;
 
+	if (!s)
+		return (0);
 	len = 0;
 	while (*s++)
 		len++;
@@ -24,22 +26,21 @@ size_t	ft_strlen(const char *s)
 
 char	*ft_strchr(const char *s, int c)
 {
-	char	*str;
-	int		i;
+	char		*str;
+	const char	to_find = (char)c;
+	int			i;
 
-	if ((char)c > 127)
-		return (NULL);
 	str = (char *)s;
-	if (s == NULL)
+	if (c < 0 || c > 127 || !s)
 		return (NULL);
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == (char)c)
+		if (str[i] == to_find)
 			return (&str[i]);
 		i++;
 	}
-	if (str[i] == '\0' && (char)c == '\0')
+	if (to_find == '\0')
 		return (&str[i]);
 	return (NULL);
 }

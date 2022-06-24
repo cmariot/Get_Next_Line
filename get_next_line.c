@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:18:47 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/24 15:59:47 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/24 16:32:40 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,14 @@ char	*gnl_outpout(char **read_line)
 		*read_line = end;
 		return (line);
 	}
-	else
+	else if ((*read_line)[len] == '\0')
 	{
 		line = ft_strdup(*read_line);
 		free(*read_line);
 		return (line);
 	}
+	else
+		return (ERROR);
 }
 
 char	*add_buf(char *str, void *buf)
@@ -52,7 +54,7 @@ char	*get_next_line(int fd)
 	char		buf[BUFFER_SIZE];
 	ssize_t		read_return;
 
-	if (fd == -1 || BUFFER_SIZE <= 0)
+	if (fd == -1 || BUFFER_SIZE <= 1)
 		return (ERROR);
 	while (1)
 	{
@@ -64,6 +66,8 @@ char	*get_next_line(int fd)
 			read_line = ft_strdup(buf);
 		else
 			read_line = add_buf(read_line, buf);
+		if (!read_line)
+			return (ERROR);
 		if (read_return == 0 || ft_strchr(read_line, '\n'))
 			break ;
 	}
@@ -104,8 +108,6 @@ char	*ft_strdup(const char *src)
 	int		src_len;
 	int		i;
 
-	if (src == NULL)
-		return (NULL);
 	src_len = ft_strlen(src);
 	if (src_len == 0)
 		return (NULL);

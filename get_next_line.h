@@ -6,14 +6,17 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:43:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/24 15:52:25 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/24 16:31:12 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define BUFFER_SIZE	10
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE	10
+# endif
+
 # define ERROR			NULL
 # define END_OF_FILE	NULL
 
