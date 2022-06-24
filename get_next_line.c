@@ -6,120 +6,117 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:18:47 by cmariot           #+#    #+#             */
-/*   Updated: 2021/07/18 02:56:21 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/24 15:59:47 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h" 
 
-char	*get_next_line(int fd)
+char	*gnl_outpout(char **read_line)
 {
-	static char	*str;
-	char		buf[BUFFER_SIZE + 1];
-	ssize_t		read_return;
+	char	*line;
+	int		len;
+	char	*end;
 
-	if (fd == -1 || BUFFER_SIZE <= 0)
-		return (NULL);
-	read_return = 1;
-	while (read_return)
+	len = 0;
+	while ((*read_line)[len] != '\0' && (*read_line)[len] != '\n')
+		len++;
+	if ((*read_line)[len] == '\n')
 	{
-		read_return = read(fd, buf, BUFFER_SIZE);
-		if (read_return == -1)
-			return (NULL);
-		buf[read_return] = '\0';
-		if (str == NULL)
-			str = ft_strdup(buf);
-		else if (str != NULL)
-			ft_add_buf_to_str(&str, buf);
-		if (ft_strchr(str, '\n'))
-			break ;
+		line = ft_substr(*read_line, 0, len + 1);
+		end = ft_strdup(*read_line + (len + 1));
+		free(*read_line);
+		*read_line = end;
+		return (line);
 	}
-	return (gnl_outpout(read_return, &str));
+	else
+	{
+		line = ft_strdup(*read_line);
+		free(*read_line);
+		return (line);
+	}
 }
 
-void	ft_add_buf_to_str(char **str, void *buf)
+char	*add_buf(char *str, void *buf)
 {
 	char	*tmp;
 
-	tmp = ft_strjoin(*str, buf);
-	ft_strdel(str);
-	*str = tmp;
-	return ;
+	tmp = ft_strjoin(str, buf);
+	free(str);
+	return (tmp);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*read_line;
+	char		buf[BUFFER_SIZE];
+	ssize_t		read_return;
+
+	if (fd == -1 || BUFFER_SIZE <= 0)
+		return (ERROR);
+	while (1)
+	{
+		read_return = read(fd, buf, BUFFER_SIZE - 1);
+		if (read_return == -1)
+			return (ERROR);
+		buf[read_return] = '\0';
+		if (!read_line)
+			read_line = ft_strdup(buf);
+		else
+			read_line = add_buf(read_line, buf);
+		if (read_return == 0 || ft_strchr(read_line, '\n'))
+			break ;
+	}
+	if (read_return == 0 && !read_line)
+		return (END_OF_FILE);
+	else
+		return (gnl_outpout(&read_line));
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
+	char	*new;
 	int		i;
 	int		j;
-	size_t	s1_size;
-	size_t	s2_size;
-	char	*str;
+	int		len;
 
 	if (!s1 || !s2)
 		return (NULL);
-	s1_size = ft_strlen(s1);
-	s2_size = ft_strlen(s2);
-	str = malloc(sizeof(char) * (s1_size + s2_size + 1));
-	if (str == NULL)
+	len = ft_strlen(s1) + ft_strlen(s2) + 1;
+	new = ft_calloc(len, sizeof(char));
+	if (new == NULL)
 		return (NULL);
 	i = 0;
 	while (s1[i] != '\0')
 	{
-		str[i] = s1[i];
+		new[i] = s1[i];
 		i++;
 	}
 	j = 0;
 	while (s2[j] != '\0')
-		str[i++] = s2[j++];
-	str[i] = '\0';
-	return (str);
+		new[i++] = s2[j++];
+	return (new);
 }
 
-char	*ft_strdup(char *s1)
+char	*ft_strdup(const char *src)
 {
-	size_t	src_len;
-	char	*src;
-	char	*cpy;
-	size_t	i;
+	char	*new;
+	int		src_len;
+	int		i;
 
-	src = (char *)s1;
+	if (src == NULL)
+		return (NULL);
 	src_len = ft_strlen(src);
-	cpy = malloc(sizeof(char) * (src_len + 1));
-	if (!cpy)
+	if (src_len == 0)
+		return (NULL);
+	new = ft_calloc(src_len + 1, sizeof(char));
+	if (new == NULL)
 		return (NULL);
 	i = 0;
 	while (i < src_len)
 	{
-		cpy[i] = s1[i];
+		new[i] = src[i];
 		i++;
 	}
-	cpy[i] = '\0';
-	return (cpy);
-}
-
-char	*gnl_outpout(ssize_t read_return, char **str_input)
-{
-	int		len;
-	char	*tmp;
-	char	*str_return;
-
-	if (read_return == 0 && **str_input == '\0')
-	{
-		ft_strdel(str_input);
-		return (NULL);
-	}
-	len = 0;
-	while ((*str_input)[len] != '\n' && (*str_input)[len] != '\0')
-		len++;
-	if ((*str_input)[len] == '\n')
-	{
-		str_return = ft_substr(*str_input, 0, len + 1);
-		tmp = ft_strdup(&(*str_input)[len + 1]);
-		ft_strdel(str_input);
-		*str_input = tmp;
-		return (str_return);
-	}
-	str_return = ft_substr(*str_input, 0, len);
-	ft_strdel(str_input);
-	return (str_return);
+	return (new);
 }

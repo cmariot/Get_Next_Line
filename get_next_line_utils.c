@@ -6,30 +6,20 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:36:20 by cmariot           #+#    #+#             */
-/*   Updated: 2021/07/15 16:34:08 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/24 15:57:57 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strdel(char **adr_str)
-{
-	if (adr_str != NULL && *adr_str != NULL)
-	{
-		free(*adr_str);
-		*adr_str = NULL;
-	}
-	return (NULL);
-}
-
 size_t	ft_strlen(const char *s)
 {
-	size_t	i;
+	size_t	len;
 
-	i = 0;
+	len = 0;
 	while (*s++)
-		i++;
-	return (i);
+		len++;
+	return (len);
 }
 
 char	*ft_strchr(const char *s, int c)
@@ -40,6 +30,8 @@ char	*ft_strchr(const char *s, int c)
 	if ((char)c < 0 || (char)c > 127)
 		return (NULL);
 	str = (char *)s;
+	if (s == NULL)
+		return (NULL);
 	i = 0;
 	while (str[i] != '\0')
 	{
@@ -90,4 +82,20 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	ft_strlcpy(str, (s + start), (len + 1));
 	return (str);
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*new;
+	size_t	nb_bytes;
+	size_t	i;
+
+	nb_bytes = size * count;
+	new = malloc(nb_bytes);
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (i < nb_bytes)
+		((char *)new)[i++] = 0;
+	return (new);
 }

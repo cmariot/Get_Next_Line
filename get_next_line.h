@@ -6,28 +6,28 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:43:01 by cmariot           #+#    #+#             */
-/*   Updated: 2021/08/26 00:49:38 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/24 15:52:25 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define BUFFER_SIZE 10
+# define BUFFER_SIZE	10
+# define ERROR			NULL
+# define END_OF_FILE	NULL
 
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
 
 char	*get_next_line(int fd);
-char	*ft_strdup(char *s1);
-size_t	ft_strlen(const char *s);
+
+char	*ft_strdup(const char *src);
 char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strchr(const char *s, int c);
+size_t	ft_strlen(const char *s);
+void	*ft_calloc(size_t count, size_t size);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-size_t	ft_strlcpy(char *dest, const char *src, size_t dst_size);
-char	*ft_strdel(char **adr_str);
-void	ft_add_buf_to_str(char **str, void *buf);
-char	*gnl_outpout(ssize_t read_return, char **str_input);
+char	*ft_strchr(const char *s, int c);
 
 #endif
