@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:36:20 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/24 15:57:57 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/24 16:05:49 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_strchr(const char *s, int c)
 	char	*str;
 	int		i;
 
-	if ((char)c < 0 || (char)c > 127)
+	if ((char)c > 127)
 		return (NULL);
 	str = (char *)s;
 	if (s == NULL)
