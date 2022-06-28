@@ -6,16 +6,16 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:43:01 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/25 01:35:50 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/28 04:52:05 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE	80
-# endif
+//# ifndef BUFFER_SIZE
+//#  define BUFFER_SIZE	80
+//# endif
 
 # define ERROR			NULL
 # define END_OF_FILE	NULL

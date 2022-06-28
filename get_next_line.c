@@ -6,11 +6,12 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:18:47 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/25 01:42:21 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/28 05:30:17 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h" 
+#include <stdio.h>
 
 char	*gnl_outpout(char **read_line)
 {
@@ -39,40 +40,48 @@ char	*gnl_outpout(char **read_line)
 		return (ERROR);
 }
 
-char	*add_buf(char *str, void *buf)
+void	add_buf_to_read_line(char **str, char *buf)
 {
 	char	*tmp;
 
-	tmp = ft_strjoin(str, buf);
-	free(str);
-	return (tmp);
+	tmp = ft_strjoin(*str, buf);
+	if (*str && **str)
+		free(*str);
+	*str = tmp;
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*read_line;
-	char		buf[BUFFER_SIZE];
+	char		buf[BUFFER_SIZE + 1];
 	ssize_t		read_return;
+	char		*tmp;
 
-	if (fd == -1 || BUFFER_SIZE <= 1)
+	if (fd == -1 || BUFFER_SIZE == 0)
 		return (ERROR);
 	while (1)
 	{
-		read_return = read(fd, buf, BUFFER_SIZE - 1);
+		read_return = read(fd, buf, BUFFER_SIZE);
 		if (read_return == -1)
 			return (ERROR);
 		buf[read_return] = '\0';
-		if (!read_line)
+		if (read_line == NULL)
 			read_line = ft_strdup(buf);
 		else
-			read_line = add_buf(read_line, buf);
-		if (!read_line)
-			return (ERROR);
+			add_buf_to_read_line(&read_line, buf);
 		if (read_return == 0 || ft_strchr(read_line, '\n'))
 			break ;
 	}
-	if (read_return == 0 && !read_line)
+	if (read_return == 0)
+	{
+		if (read_line)
+		{
+			tmp = ft_strdup(read_line);
+			free(read_line);
+			return (tmp);
+		}
 		return (END_OF_FILE);
+	}
 	else
 		return (gnl_outpout(&read_line));
 }

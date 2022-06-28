@@ -6,7 +6,7 @@
 /*   By: cmariot <cmariot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 14:36:20 by cmariot           #+#    #+#             */
-/*   Updated: 2022/06/24 16:28:57 by cmariot          ###   ########.fr       */
+/*   Updated: 2022/06/28 04:41:16 by cmariot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	len;
 
-	if (!s)
+	if (s == NULL)
 		return (0);
 	len = 0;
-	while (*s++)
+	while (s[len] != '\0')
 		len++;
 	return (len);
 }
